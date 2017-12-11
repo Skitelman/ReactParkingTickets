@@ -1,0 +1,15 @@
+.search-bar-instructions {
+  margin-top: 20px;
+}
+
+.ticket-list {
+  margin-top: 20px;
+}
+
+.ticket-list-item {
+  cursor: pointer;
+}
+
+.ticket-list-item:select {
+  background-color: #efefef;
+}

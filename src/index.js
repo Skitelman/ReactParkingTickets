@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import Axios from 'axios';
+import SearchBar from './components/search_bar';
+import TicketList from './components/ticket_list';
+import TicketDetail from './components/ticket_detail';
 
-import App from './components/app';
-import reducers from './reducers';
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { licensePlate: null, tickets: [], selectedTicket: null };
+  }
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+  ticketSearch(licensePlate) {
+    this.setState({licensePlate})
+    Axios.get(`https://data.cityofnewyork.us/resource/uvbq-3m68.json?plate=${licensePlate}`)
+      .then(res => {
+        console.log(res);
+        this.setState({ tickets: res.data })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
-ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+  render() {
+    return (
+      <div>
+        <SearchBar onSearchEnter={(licensePlate) => this.ticketSearch(licensePlate)}/>
+        <TicketDetail ticket={this.state.selectedTicket} />
+        <TicketList
+          licensePlate={this.state.licensePlate}
+          tickets={this.state.tickets}
+          selectedTicket={this.state.selectedTicket}
+          onTicketSelect={(selectedTicket) => this.setState({selectedTicket})}
+        />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector('.container'));
