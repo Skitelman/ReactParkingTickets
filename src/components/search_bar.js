@@ -25,6 +25,7 @@ class SearchBar extends Component {
 
   onInputEnter(event) {
     if (event.key === 'Enter' ) {
+      this.props.resetSelectedTicket();
       this.setState({licensePlate: event.target.value});
       this.props.onSearchEnter(event.target.value.toUpperCase());
     };

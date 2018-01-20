@@ -15,7 +15,6 @@ class App extends Component {
     this.setState({licensePlate})
     Axios.get(`https://data.cityofnewyork.us/resource/uvbq-3m68.json?plate=${licensePlate}`)
       .then(res => {
-        console.log(res);
         this.setState({ tickets: res.data })
       })
       .catch(function (error) {
@@ -23,11 +22,16 @@ class App extends Component {
       });
   }
 
+  resetSelectedTicket() {
+    this.setState({selectedTicket: null});
+  }
+
   render() {
     return (
       <div>
-        <SearchBar onSearchEnter={(licensePlate) => this.ticketSearch(licensePlate)}/>
-        <TicketDetail ticket={this.state.selectedTicket} />
+        <SearchBar
+          onSearchEnter={(licensePlate) => this.ticketSearch(licensePlate)}
+          resetSelectedTicket={() => this.resetSelectedTicket()}/>
         <TicketList
           licensePlate={this.state.licensePlate}
           tickets={this.state.tickets}

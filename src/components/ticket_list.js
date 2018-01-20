@@ -5,7 +5,7 @@ const TicketList = ({licensePlate, tickets, selectedTicket, onTicketSelect}) => 
   if (!licensePlate) {
     return <div></div>;
   }
-  if (!tickets) {
+  if (tickets.length === 0) {
     return <h3> No tickets for {licensePlate}</h3>
   }
 
