@@ -4,7 +4,6 @@ import TicketDetail from './ticket_detail';
 
 const TicketListItem = ({ticket, selectedTicket, onTicketSelect}) => {
   const active = selectedTicket === ticket ? 'active' : '';
-  console.log(ticket);
 
   return (
     <div>
