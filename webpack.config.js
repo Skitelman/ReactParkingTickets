@@ -1,10 +1,15 @@
+const path = require('path')
+const webpack = require('webpack')
+
 module.exports = {
+  devtool: 'eval',
   entry: [
+    'webpack-hot-middleware/client',
     './src/index.js'
   ],
   output: {
-    path: __dirname,
-    publicPath: '/',
+    path: path.join(__dirname, 'public'),
+    publicPath: '/public/',
     filename: 'bundle.js'
   },
   module: {
